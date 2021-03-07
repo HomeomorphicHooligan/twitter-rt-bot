@@ -1,0 +1,7 @@
+{
+  "credentials": {
+    "consumer key": "consumer key",
+    "consumer token": "consumer token"
+  },
+  "hashtags": ["hashtag1", "hashtag2", "hashtag3"]
+}
