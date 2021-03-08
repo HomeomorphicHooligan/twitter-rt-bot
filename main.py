@@ -98,10 +98,10 @@ def to_iso_code(language):
         # if you consider it necessary.
         #
         # TODO Add more languages here if it's necessary, see issue 1 in github.
-        # TODO The API of Twitter works using iso2alpha codes, we can translate from the language name to the code.
-        # TODO for doing that we use a hash map (see the code), so this hash map can contain more languages.
-        # TODO if you think your language should be here, you can create a pull request.
-        # TODO the structure of the hashmap is "language": "code", where language is in lowercase.
+        # The API of Twitter works using iso2alpha codes, we can translate from the language name to the code.
+        # for doing that we use a hash map (see the code), so this hash map can contain more languages.
+        # if you think your language should be here, you can create a pull request.
+        # the structure of the hashmap is "language": "code", where language is in lowercase.
         "arab": "ar",
         "greek": "el",
         "german": "de",
@@ -233,14 +233,14 @@ except Exception as e:
 # the bot should not retweet it if the user has less than 10 followers, this conditions are also defined
 # inside the configuration.json file
 # TODO Create a condition for filtering the tweets
-# TODO In order to avoid Spam, we want to implement a set of conditions before retweeting a tweet.
-# TODO this will make the bot not to retweet so much spam or shitty tweets.
-# TODO We would like to check this conditions following the rules declared in the configuration.json file.
-# TODO They're:
-# TODO - minimum number of followers
-# TODO - minimum number of likes
-# TODO - minimum number of rts
-# TODO So, having the "tweets" list, it'd be great to filter it to the "final tweets" one!
+# In order to avoid Spam, we want to implement a set of conditions before retweeting a tweet.
+# this will make the bot not to retweet so much spam or shitty tweets.
+# We would like to check this conditions following the rules declared in the configuration.json file.
+# They're:
+# - minimum number of followers
+# - minimum number of likes
+# - minimum number of rts
+# So, having the "tweets" list, it'd be great to filter it to the "final tweets" one!
 CONDITIONS = configuration["conditions-for-retweet"]
 FOLLOWERS, LIKES, RETWEETS, LENGTH = 0, 0, 0, 0
 try:
