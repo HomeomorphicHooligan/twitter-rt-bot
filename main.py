@@ -209,6 +209,25 @@ except Exception as e:
 
 # Now we have parsed the configuration so we should start scrapping the tweets
 tweets = list()
+# Now we have a list of tweets that are going to be retweeted, however we can implement some conditions to avoid
+# spam, for example we could say that the bot should not retweet the tweet if it has lees than 3 retweets, or that
+# the bot should not retweet it if the user has less than 10 followers, this conditions are also defined
+# inside the configuration.json file
+CONDITIONS = configuration["conditions-for-retweet"]
+LIKES, RETWEETS, LENGTH = 0, 0, 0
+try:
+    # We set the constants to the minimum value to be retweeted, so for example if the minimal value of
+    # retweets is equal to 5, |RETWEETS=5|, and if a tweet has 4 rt, it'll not pass the filter
+    LIKES = CONDITIONS["minimum-likes"]
+    RETWEETS = CONDITIONS["minimum-retweets"]
+    LENGTH = CONDITIONS["minimum-length"]
+except KeyError as _:
+    err = "Can't parse the minimum conditions for retweeting the tweet"
+    log(err, log_type="error")
+    raise KeyError(err)
+except Exception as e:
+    log_undefined_error(e)
+
 try:
     for t in tweepy.Cursor(api.search, q=HASHTAG).items(MAX_TWEETS):
         current_tweet = {
@@ -217,6 +236,9 @@ try:
             "text": t.text
         }
         tweets.append(current_tweet)
+        if t.retweet_count >= RETWEETS and t.favorite_count >= LIKES and len(t.text) > LENGTH:
+            # If the tweet matches all the conditions, we can retweet it!
+            api.retweet(t)
 except tweepy.error.RateLimitError as e:
     min = MINUTES_TO_SLEEP * 60
     time.sleep(min)
@@ -229,34 +251,3 @@ except Exception as e:
     err = f"Failed when scrapping the tweets: {e}"
     log(err, log_type="error")
     raise Exception(err)
-
-# Now we have a list of tweets that are going to be retweeted, however we can implement some conditions to avoid
-# spam, for example we could say that the bot should not retweet the tweet if it has lees than 3 retweets, or that
-# the bot should not retweet it if the user has less than 10 followers, this conditions are also defined
-# inside the configuration.json file
-CONDITIONS = configuration["conditions-for-retweet"]
-LIKES, RETWEETS, LENGTH = 0, 0, 0
-try:
-    # We set the constants to the minimum value to be retweeted, so for example if the minimal value of retweets is
-    # equal to 5, |RETWEETS=5|, and if a tweet has 4 rt, it'll not pass the filter
-    LIKES = CONDITIONS["minimum-likes"]
-    RETWEETS = CONDITIONS["minimum-retweets"]
-    LENGTH = CONDITIONS["minimum-length"]
-except KeyError as _:
-    err = "Can't parse the minimum conditions for retweeting the tweet"
-    log(err, log_type="error")
-    raise KeyError(err)
-except Exception as e:
-    log_undefined_error(e)
-
-# And now, evaluate every tweet (see "to-do" above)
-final_tweets = list()
-for tweet in tweets:
-    t = api.get_status(tweet["id"])
-    if t.retweets_count >= RETWEETS and t.favorites_count >= LIKES:
-        final_tweets.append(t)
-
-# Ok, now we have a list of final tweets, it contains all the tweets that should be retweeted, so we can use the
-# api for doing so!
-for tweet in final_tweets:
-    api.retweet(tweet)
