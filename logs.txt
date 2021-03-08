@@ -1,0 +1,10 @@
+
+07/03/2021 at 20:13:31 | 
+THIS IS A TITLE FOR THE LOGS
+07/03/2021 at 20:13:31 | [I]: This is some information that has to be written at the logs
+07/03/2021 at 20:13:31 | [E]: This is an error
+07/03/2021 at 20:13:31 | [I]: This Is Weird
+07/03/2021 at 20:14:07 | THIS IS A TITLE FOR THE LOGS
+07/03/2021 at 20:14:07 | [I]: This is some information that has to be written at the logs
+07/03/2021 at 20:14:07 | [E]: This is an error
+07/03/2021 at 20:14:07 | [I]: This Is Weird
