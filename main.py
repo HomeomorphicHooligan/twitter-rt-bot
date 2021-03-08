@@ -13,10 +13,11 @@ Please do not touch the script, all the configuration should be exported to the 
 import json
 import datetime
 import tweepy
+import time
 
 # Some constants for the script
 CONFIGURATION_ROUTE = "configuration.json"
-LOGS_ROUTE = "logs.txt"
+MINUTES_TO_SLEEP = 15
 
 
 def get_current_time():
@@ -157,12 +158,15 @@ except Exception as e:
     log_undefined_error(e)
 
 # Extract the credentials from the configuration and then try to create the auth
+LOGS_ROUTE = "logs.txt"
 CONSUMER_KEY, CONSUMER_SECRET = "", ""
 ACCESS_TOKEN, ACCESS_TOKEN_SECRET = "", ""
 try:
-    credentials = configuration["credentials"]
-    CONSUMER_KEY = credentials["consumer-key"]
-    CONSUMER_SECRET = credentials["consumer-secret"]
+    CREDENTIALS = configuration["credentials"]
+    CONSUMER_KEY = CREDENTIALS["consumer-key"]
+    CONSUMER_SECRET = CREDENTIALS["consumer-secret"]
+    ACCESS_TOKEN = CREDENTIALS["access-token"]
+    ACCESS_TOKEN_SECRET = CREDENTIALS["access-token-secret"]
 except KeyError as e:
     err = "Internal key error when using the credentials..."
     log(err, log_type="error")
@@ -170,12 +174,13 @@ except KeyError as e:
 except Exception as e:
     log_undefined_error(e)
 
+log("starting the script", log_type="title")
 # Create an auth object and access the api of twitter
-auth, api = None, None
+api, auth = None, None
 try:
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    api = tweepy.api(auth)
+    api = tweepy.API(auth)
 except Exception as e:
     log_undefined_error(e)
 
@@ -205,9 +210,17 @@ try:
             "text": t.text
         }
         tweets.append(current_tweet)
+except tweepy.error.RateLimitError as e:
+    min = MINUTES_TO_SLEEP * 60
+    time.sleep(min)
+    log(f"The user passed the api rate limit, so we are going to sleep {min}")
+except tweepy.error.TweepError as e:
+    err = f"Tweepy raised an error: {e}"
+    log(err, log_type="error")
+    raise ValueError(err)
 except Exception as e:
     err = f"Failed when scrapping the tweets: {e}"
-    log(err)
+    log(err, log_type="error")
     raise Exception(err)
 
 # Now we have a list of tweets that are going to be retweeted, however we can implement some conditions to avoid

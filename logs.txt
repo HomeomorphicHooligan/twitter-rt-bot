@@ -8,3 +8,42 @@ THIS IS A TITLE FOR THE LOGS
 07/03/2021 at 20:14:07 | [I]: This is some information that has to be written at the logs
 07/03/2021 at 20:14:07 | [E]: This is an error
 07/03/2021 at 20:14:07 | [I]: This Is Weird
+08/03/2021 at 16:43:04 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 16:43:04 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 16:49:43 | STARTING THE SCRIPT
+08/03/2021 at 16:49:43 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 16:49:43 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:34:04 | STARTING THE SCRIPT
+08/03/2021 at 17:34:04 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 17:34:16 | STARTING THE SCRIPT
+08/03/2021 at 17:34:16 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 17:34:16 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:34:35 | STARTING THE SCRIPT
+08/03/2021 at 17:34:35 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 17:34:35 | [I]: Failed when scrapping the tweets: name 'api' is not defined
+08/03/2021 at 17:34:53 | STARTING THE SCRIPT
+08/03/2021 at 17:34:53 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 17:34:53 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:35:04 | STARTING THE SCRIPT
+08/03/2021 at 17:35:04 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 17:35:04 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:35:14 | STARTING THE SCRIPT
+08/03/2021 at 17:35:14 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 17:35:14 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:35:25 | STARTING THE SCRIPT
+08/03/2021 at 17:35:25 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 17:35:25 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:36:07 | STARTING THE SCRIPT
+08/03/2021 at 17:36:07 | [E]: An exception is not handled: module 'tweepy' has no attribute 'Api'
+08/03/2021 at 17:36:07 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:36:15 | STARTING THE SCRIPT
+08/03/2021 at 17:36:15 | [E]: An exception is not handled: module 'tweepy' has no attribute 'Api'
+08/03/2021 at 17:36:15 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:36:27 | STARTING THE SCRIPT
+08/03/2021 at 17:36:27 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 17:36:27 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:36:38 | STARTING THE SCRIPT
+08/03/2021 at 17:36:38 | [E]: An exception is not handled: 'API' object is not callable
+08/03/2021 at 17:36:38 | [I]: Failed when scrapping the tweets: 'NoneType' object has no attribute 'search'
+08/03/2021 at 17:38:10 | STARTING THE SCRIPT
+08/03/2021 at 17:38:11 | [I]: Failed when scrapping the tweets: Twitter error response: status code = 401
