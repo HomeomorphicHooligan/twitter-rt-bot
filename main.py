@@ -244,9 +244,10 @@ except tweepy.error.RateLimitError as e:
     time.sleep(min)
     log(f"The user passed the api rate limit, so we are going to sleep {min}")
 except tweepy.error.TweepError as e:
-    err = f"Tweepy raised an error: {e}"
-    log(err, log_type="error")
-    raise ValueError(err)
+    if e.api_code != 431:
+        err = f"Tweepy raised an error: {e}"
+        log(err, log_type="error")
+        raise ValueError(err)
 except Exception as e:
     err = f"Failed when scrapping the tweets: {e}"
     log(err, log_type="error")
