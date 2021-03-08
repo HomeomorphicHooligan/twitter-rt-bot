@@ -94,9 +94,14 @@ def to_iso_code(language):
     :return:
     """
     languages = {
-        # Contains all the languages that are supported and their hash key representation, you can add more of them if
-        # you consider it necessary.
-        # TODO: Add more languages here if it's necessary, see issue 1 in github.
+        # Contains all the languages that are supported and their hash key representation, you can add more of them
+        # if you consider it necessary.
+        #
+        # TODO Add more languages here if it's necessary, see issue 1 in github.
+        # TODO The API of Twitter works using iso2alpha codes, we can translate from the language name to the code.
+        # TODO for doing that we use a hash map (see the code), so this hash map can contain more languages.
+        # TODO if you think your language should be here, you can create a pull request.
+        # TODO the structure of the hashmap is "language": "code", where language is in lowercase.
         "arab": "ar",
         "greek": "el",
         "german": "de",
@@ -227,7 +232,15 @@ except Exception as e:
 # spam, for example we could say that the bot should not retweet the tweet if it has lees than 3 retweets, or that
 # the bot should not retweet it if the user has less than 10 followers, this conditions are also defined
 # inside the configuration.json file
-# TODO: Apply this conditions for filtering the "tweets" list into the final_tweets list keeping in mind the conf.
+# TODO Create a condition for filtering the tweets
+# TODO In order to avoid Spam, we want to implement a set of conditions before retweeting a tweet.
+# TODO this will make the bot not to retweet so much spam or shitty tweets.
+# TODO We would like to check this conditions following the rules declared in the configuration.json file.
+# TODO They're:
+# TODO - minimum number of followers
+# TODO - minimum number of likes
+# TODO - minimum number of rts
+# TODO So, having the "tweets" list, it'd be great to filter it to the "final tweets" one!
 CONDITIONS = configuration["conditions-for-retweet"]
 FOLLOWERS, LIKES, RETWEETS, LENGTH = 0, 0, 0, 0
 try:
