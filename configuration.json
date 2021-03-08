@@ -6,11 +6,10 @@
     "access-token-secret": "access-token-secret"
   },
   "hashtag": "usa2020",
-  "max-tweets": 1000,
+  "max-tweets": 10,
   "language": "english",
   "result-type": "mixed",
   "conditions-for-retweet": {
-    "minimum-followers": 10,
     "minimum-likes": 5,
     "minimum-retweets": 8,
     "minimum-length": 75

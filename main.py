@@ -8,6 +8,9 @@ list of key hashtags, for example #programming.
 
 This bot has been created by Pablo Corbalan, check out his Twitter at: @pablocorbcon
 
+For running this application use the python interpreter: python3 main.py, or simply python if you just
+have a python version installed.
+
 Please do not touch the script, all the configuration should be exported to the configuration.json file!!
 """
 import json
@@ -185,7 +188,7 @@ api, auth = None, None
 try:
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    api = tweepy.API(auth)
+    api = tweepy.API(auth, timeout=100)
 except Exception as e:
     log_undefined_error(e)
 
@@ -207,8 +210,7 @@ except Exception as e:
 # Now we have parsed the configuration so we should start scrapping the tweets
 tweets = list()
 try:
-    scrapper = tweepy.Cursor(api.search, q=HASHTAG).items(MAX_TWEETS)
-    for t in scrapper:
+    for t in tweepy.Cursor(api.search, q=HASHTAG).items(MAX_TWEETS):
         current_tweet = {
             "id": t.id,
             "created-at": t.created_at,
@@ -232,21 +234,11 @@ except Exception as e:
 # spam, for example we could say that the bot should not retweet the tweet if it has lees than 3 retweets, or that
 # the bot should not retweet it if the user has less than 10 followers, this conditions are also defined
 # inside the configuration.json file
-# TODO Create a condition for filtering the tweets
-# In order to avoid Spam, we want to implement a set of conditions before retweeting a tweet.
-# this will make the bot not to retweet so much spam or shitty tweets.
-# We would like to check this conditions following the rules declared in the configuration.json file.
-# They're:
-# - minimum number of followers
-# - minimum number of likes
-# - minimum number of rts
-# So, having the "tweets" list, it'd be great to filter it to the "final tweets" one!
 CONDITIONS = configuration["conditions-for-retweet"]
-FOLLOWERS, LIKES, RETWEETS, LENGTH = 0, 0, 0, 0
+LIKES, RETWEETS, LENGTH = 0, 0, 0
 try:
     # We set the constants to the minimum value to be retweeted, so for example if the minimal value of retweets is
     # equal to 5, |RETWEETS=5|, and if a tweet has 4 rt, it'll not pass the filter
-    FOLLOWERS = CONDITIONS["minimum-followers"]
     LIKES = CONDITIONS["minimum-likes"]
     RETWEETS = CONDITIONS["minimum-retweets"]
     LENGTH = CONDITIONS["minimum-length"]
@@ -260,12 +252,11 @@ except Exception as e:
 # And now, evaluate every tweet (see "to-do" above)
 final_tweets = list()
 for tweet in tweets:
-    is_valid_tweet = False  # This has to be changed
-    if is_valid_tweet:
-        final_tweets.append(tweet)
+    t = api.get_status(tweet["id"])
+    if t.retweets_count >= RETWEETS and t.favorites_count >= LIKES:
+        final_tweets.append(t)
 
 # Ok, now we have a list of final tweets, it contains all the tweets that should be retweeted, so we can use the
 # api for doing so!
 for tweet in final_tweets:
-    id_ = tweet["id"]
-    api.retweet(id_)
+    api.retweet(tweet)
