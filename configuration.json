@@ -6,5 +6,24 @@
   "hashtag": "usa2020",
   "max-tweets": 1000,
   "language": "english",
-  "result-type": "mixed"
+  "result-type": "mixed",
+  "conditions-for-retweet": {
+    "minimum-followers": 10,
+    "minimum-likes": 5,
+    "minimum-retweets": 8,
+    "minimum-length": 75
+  },
+  "logs": {
+    "display-date": 1,
+    "display-time": 1,
+    "formats": {
+      "time": "%d/%m/%Y",
+      "date": "%H:%M:%S"
+    },
+    "separator": "at",
+    "type-separator": {
+      "open": "[",
+      "close": "]"
+    }
+  }
 }

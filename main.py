@@ -205,11 +205,41 @@ try:
             "text": t.text
         }
         tweets.append(current_tweet)
-except:
-    pass
+except Exception as e:
+    err = f"Failed when scrapping the tweets: {e}"
+    log(err)
+    raise Exception(err)
 
-if __name__ == "__main__":
-    log("This is a title for the logs", log_type="title")
-    log("This is some information that has to be written at the logs")
-    log("This is an error", log_type="error")
-    log("This Is Weird")
+# Now we have a list of tweets that are going to be retweeted, however we can implement some conditions to avoid
+# spam, for example we could say that the bot should not retweet the tweet if it has lees than 3 retweets, or that
+# the bot should not retweet it if the user has less than 10 followers, this conditions are also defined
+# inside the configuration.json file
+# TODO: Apply this conditions for filtering the "tweets" list into the final_tweets list keeping in mind the conf.
+CONDITIONS = configuration["conditions-for-retweet"]
+FOLLOWERS, LIKES, RETWEETS, LENGTH = 0, 0, 0, 0
+try:
+    # We set the constants to the minimum value to be retweeted, so for example if the minimal value of retweets is
+    # equal to 5, |RETWEETS=5|, and if a tweet has 4 rt, it'll not pass the filter
+    FOLLOWERS = CONDITIONS["minimum-followers"]
+    LIKES = CONDITIONS["minimum-likes"]
+    RETWEETS = CONDITIONS["minimum-retweets"]
+    LENGTH = CONDITIONS["minimum-length"]
+except KeyError as _:
+    err = "Can't parse the minimum conditions for retweeting the tweet"
+    log(err, log_type="error")
+    raise KeyError(err)
+except Exception as e:
+    log_undefined_error(e)
+
+# And now, evaluate every tweet (see "to-do" above)
+final_tweets = list()
+for tweet in tweets:
+    is_valid_tweet = False  # This has to be changed
+    if is_valid_tweet:
+        final_tweets.append(tweet)
+
+# Ok, now we have a list of final tweets, it contains all the tweets that should be retweeted, so we can use the
+# api for doing so!
+for tweet in final_tweets:
+    id_ = tweet["id"]
+    api.retweet(id_)
