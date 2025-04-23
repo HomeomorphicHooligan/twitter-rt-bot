@@ -29,7 +29,5 @@ Now, run the `main.py` file using the Python3 interpreter:
 ```shell
 python3 main.py
 ```
-Last, but not least you can follow me on Twitter as [@pablocorbcon](https://twitter.com/pablocorbcon).
-
 ### License and terms
 This program is under the MIT license, read it [here](LICENSE).
